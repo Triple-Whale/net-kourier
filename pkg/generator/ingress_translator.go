@@ -155,14 +155,14 @@ func (translator *IngressTranslator) translateIngress(ctx context.Context, ingre
 				// Match the ingress' port with a port on the Service to find the target.
 				// Also find out if the target supports HTTP2.
 				var (
-					externalPort       = int32(80)
+					// externalPort       = int32(80)
 					targetPort         = int32(80)
 					http2              = false
 					internalEncryption = false
 				)
 				for _, port := range service.Spec.Ports {
 					if port.Port == split.ServicePort.IntVal || port.Name == split.ServicePort.StrVal {
-						externalPort = port.Port
+						// externalPort = port.Port
 						targetPort = port.TargetPort.IntVal
 					}
 					if port.Name == "http2" || port.Name == "h2c" {
@@ -184,10 +184,10 @@ func (translator *IngressTranslator) translateIngress(ctx context.Context, ingre
 				)
 				if service.Spec.Type == corev1.ServiceTypeExternalName {
 					// If the service is of type ExternalName, we add a single endpoint.
-					typ = v3.Cluster_LOGICAL_DNS
-					publicLbEndpoints = []*endpoint.LbEndpoint{
-						envoy.NewLBEndpoint(service.Spec.ExternalName, uint32(externalPort)),
-					}
+					// typ = v3.Cluster_LOGICAL_DNS
+					// publicLbEndpoints = []*endpoint.LbEndpoint{
+					// 	envoy.NewLBEndpoint(service.Spec.ExternalName, uint32(externalPort)),
+					// }
 				} else {
 					// For all other types, fetch the endpoints object.
 					endpoints, err := translator.endpointsGetter(split.ServiceNamespace, split.ServiceName)

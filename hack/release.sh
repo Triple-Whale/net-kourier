@@ -17,6 +17,10 @@
 # Documentation about this script and how to use it can be found
 # at https://github.com/knative/hack
 
+# bash hack/release.sh --skip-tests --release-gcr "us-central1-docker.pkg.dev/shofifi/knative" --publish
+
+export KO_DOCKER_REPO="us-central1-docker.pkg.dev/shofifi/knative"
+
 source $(dirname $0)/../vendor/knative.dev/hack/release.sh
 
 # Yaml files to generate, and the source config dir for them.
